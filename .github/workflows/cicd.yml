@@ -1,7 +1,7 @@
 name: Test CI CD #имя
 on: # какие события будут обрабатываться
   push:
-    branches: [master]
+    branches: [main]
 jobs:  #задания, которые будет выполнять GitHub
   test-and-package: #названия
     runs-on: ubuntu-latest #какая операционная система будет использоваться
