@@ -1,27 +1,27 @@
-name: Test CI CD
-on:
+name: Test lab3 #имя
+on: # какие события будут обрабатываться
   push:
     branches: [src]
-jobs:
-  test-and-coverage-package:
-    runs-on: ubuntu-latest
+jobs: #задания, которые будет выполнять GitHub
+  test-and-coverage-package: #названия
+    runs-on: ubuntu-latest #какая операционная система будет использоваться
     env:
       COVERAGE_HTML_REPORT_PATH: /tmp/coverage_html_report
       PYTEST_REPORT_PATH: /tmp/pytest_report.html
-    steps:
+    steps: #шаги
       - name: "Checkout repository"
         uses: actions/checkout@v3
       - name: "Install python"
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.9'
           architecture: 'x64'
       - name: "Install project dependencies"
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt # последовательные команды (команда 1)
       - name: "Run tests and code coverage analysis"
-        run: coverage run -m pytest --html=${{ env.PYTEST_REPORT_PATH }} --self-contained-html
+        run: coverage run -m pytest --html=${{ env.PYTEST_REPORT_PATH }} --self-contained-html # последовательные команды (команда 2)
       - name: "Generate code coverage html report"
-        run: coverage html --directory ${{ env.COVERAGE_HTML_REPORT_PATH }}
+        run: coverage html --directory ${{ env.COVERAGE_HTML_REPORT_PATH }} # последовательные команды (команда 3)
       - name: "Archive pytest and coverage reports"
         uses: actions/upload-artifact@v3
         if: ${{!cancelled()}}
