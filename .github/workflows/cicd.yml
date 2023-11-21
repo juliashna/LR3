@@ -41,3 +41,4 @@ jobs: #Задания, которые будет выполнять GitHab, ко
         uses: actions/upload-artifact@v3
         with:
           name: "Built package"
+          path: "src"
