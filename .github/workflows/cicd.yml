@@ -1,7 +1,7 @@
 name: Test lab3 #имя
 on: # какие события будут обрабатываться
   push:
-    branches: [src]
+    branches: []
 jobs: #задания, которые будет выполнять GitHub
   test-and-coverage-package: #названия
     runs-on: ubuntu-latest #какая операционная система будет использоваться
