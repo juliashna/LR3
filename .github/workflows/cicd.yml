@@ -1,14 +1,14 @@
-name: Test lab3 #имя
+name: Test CI CD #имя
 on: # какие события будут обрабатываться
   push:
     branches: [src]
-jobs: #задания, которые будет выполнять GitHub
-  test-and-coverage-package: #названия
+jobs:  #задания, которые будет выполнять GitHub
+  test-and-package: #названия
     runs-on: ubuntu-latest #какая операционная система будет использоваться
     env:
-      COVERAGE_HTML_REPORT_PATH: /tmp/coverage_html_report
+      COVERAGE_XML_REPORT_PATH: /tmp/coverage_xml_report.xml
       PYTEST_REPORT_PATH: /tmp/pytest_report.html
-    steps: #шаги
+    steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
       - name: "Install python"
@@ -17,22 +17,19 @@ jobs: #задания, которые будет выполнять GitHub
           python-version: '3.8'
           architecture: 'x64'
       - name: "Install project dependencies"
-        run: pip install -r requirements.txt # последовательные команды (команда 1)
+        run: pip install -r requirements.txt
       - name: "Run tests and code coverage analysis"
-        run: coverage run -m pytest --html=${{ env.PYTEST_REPORT_PATH }} --self-contained-html # последовательные команды (команда 2)
-      - name: "Generate code coverage html report"
-        run: coverage html --directory ${{ env.COVERAGE_HTML_REPORT_PATH }} # последовательные команды (команда 3)
-      - name: "Archive pytest and coverage reports"
+        run: pytest --html=${{ env.PYTEST_REPORT_PATH }} --self-contained-html
+      - name: "Archive pytest reports"
         uses: actions/upload-artifact@v3
         if: ${{!cancelled()}}
         with:
-          name: "Test and coverage reports"
+          name: "Test and reports"
           path: |
             ${{ env.PYTEST_REPORT_PATH }}
-            ${{ env.COVERAGE_HTML_REPORT_PATH }}
 
   publish-package-as-artifact:
-    needs: ["test-and-coverage-package"]
+    needs: ["test-package"]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository"
