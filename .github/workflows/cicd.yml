@@ -1,25 +1,25 @@
-name: Test CI CD #имя нашего пайплайна
-on: #Для каких событий должен срабатывать этот пайплайн
-  push: #Срабатывание на push main, он должен запускаться и отрабатывать
+name: Test CI CD #имя
+on: # какие события будут обрабатываться
+  push:
     branches: [master]
-jobs: #Задания, которые будет выполнять GitHab, когда выполниться событие
-  test-and-coverage-package:
-    runs-on: ubuntu-latest # образ, который будет использоваться в интаграционной системы для данной job
+jobs: #задания, которые будет выполнять GitHub
+  test:
+    runs-on: ubuntu-latest #какая операционная система будет использоваться
     env:
       COVERAGE_HTML_REPORT_PATH: /tmp/coverage_html_report
       PYTEST_REPORT_PATH: /tmp/pytest_report.html
-    steps: # Шаги
+    steps: # шаги
       - name: "Checkout repository" #имя
-        uses: actions/checkout@v3 #он берёт наш репозиторий и переносит его делать checkot образ делать какие-то дальнейшие шаги
+        uses: actions/checkout@v3
       - name: "Install python"
         uses: actions/setup-python@v4
         with: #указание версии питона
           python-version: '3.8'
           architecture: 'x64'
       - name: "Install project dependencies" #Установка зависимостей
-        run: pip install -r requirements.txt #Блог ран - команда
+        run: pip install -r requirements.txt
       - name: "Run tests and code coverage analysis"
-        run: coverage run -m pytest --html=${{ env.PYTEST_REPORT_PATH }} --self-contained-html
+        run: coverage run pytest --html=${{ env.PYTEST_REPORT_PATH }} --self-contained-html
       - name: "Generate code coverage html report"
         run: coverage html --directory ${{ env.COVERAGE_HTML_REPORT_PATH }}
       - name: "Archive pytest and coverage reports"
@@ -32,7 +32,7 @@ jobs: #Задания, которые будет выполнять GitHab, ко
             ${{ env.COVERAGE_HTML_REPORT_PATH }}
 
   publish-package-as-artifact:
-    needs: ["test-and-package"]
+    needs: ["test"]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository"
