@@ -7,7 +7,7 @@ jobs: #задания, которые будет выполнять GitHub
     runs-on: ubuntu-latest #какая операционная система будет использоваться
     env:
       COVERAGE_HTML_REPORT_PATH: /tmp/coverage_html_report
-      PYTEST_REPORT_PATH: /tmp/pytest_report.html
+      PYTEST_REPORT_PATH: /tmp/report.html
     steps: # шаги
       - name: "Checkout repository" #имя
         uses: actions/checkout@v3
