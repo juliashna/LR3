@@ -1,8 +1,6 @@
-import sys
-sys.path.append('C:/Users/Honor/PycharmProjects/LR3')
-from src.lib import Fibonacchi
-from src.lib import Bubble
-from src.lib import Calculator
+from lib import Fibonacchi
+from lib import Bubble
+from lib import Calculator
 
 def test_Fibonacchi_correct():
     assert Fibonacchi(5) == [0, 1, 1, 2, 3]
