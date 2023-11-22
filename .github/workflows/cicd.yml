@@ -32,7 +32,7 @@ jobs: #Задания, которые будет выполнять GitHab, ко
             ${{ env.COVERAGE_HTML_REPORT_PATH }}
 
   publish-package-as-artifact:
-    needs: ["test-and-coverage-package"]
+    needs: ["test-and-package"]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository"
